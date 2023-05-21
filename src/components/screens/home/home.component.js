@@ -2,6 +2,7 @@ import { BaseScreen } from '@/core/component/base-screen/base-screen.component'
 import { $R } from '@/core/rquery/rquery.lib'
 import renderService from '@/core/services/render.service'
 
+import { Actions } from '@/components/screens/home/actions/actions.component'
 import { CardInfo } from '@/components/screens/home/card-info/card-info.component'
 
 import { Button } from '@/components/ui/button/button.component'
@@ -16,7 +17,11 @@ export class Home extends BaseScreen {
 		super({ title: 'Home' })
 	}
 	render() {
-		const element = renderService.htmlToElement(template, [CardInfo], styles)
+		const element = renderService.htmlToElement(
+			template,
+			[CardInfo, Actions],
+			styles
+		)
 		// $R(element).find('h1').css('color', 'blue')
 		return element
 	}
