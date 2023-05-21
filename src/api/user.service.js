@@ -4,10 +4,19 @@ export class UserService {
 	#BASE_URL = '/users'
 
 	getAll(searchTerm, onSuccess) {
+		console.log(
+			`${this.#BASE_URL}${
+				searchTerm
+					? `${new URLSearchParams({
+							searchTerm
+					  })}`
+					: ''
+			}`
+		)
 		return redQuery({
 			path: `${this.#BASE_URL}${
 				searchTerm
-					? `${new URLSearchParams({
+					? `?${new URLSearchParams({
 							searchTerm
 					  })}`
 					: ''

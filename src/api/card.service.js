@@ -11,7 +11,7 @@ export class CardService {
 	}
 	byUser(onSuccess) {
 		return redQuery({
-			path: `${this.#BASE_URL / by - user}`,
+			path: `${this.#BASE_URL}/by-user`,
 			onSuccess
 		})
 	}

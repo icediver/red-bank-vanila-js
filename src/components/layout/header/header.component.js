@@ -19,6 +19,10 @@ export class Header extends ChildComponent {
 		this.store.addObserver(this)
 
 		this.router = router
+		this.userItem = new UserItem({
+			avatarPath: '/',
+			name: 'Artem'
+		})
 	}
 
 	update() {
@@ -28,6 +32,8 @@ export class Header extends ChildComponent {
 
 		if (this.user) {
 			authSideElement.show()
+			this.userItem.update(this.user)
+			this.router.navigate('/')
 		} else {
 			authSideElement.hide()
 		}
@@ -44,11 +50,7 @@ export class Header extends ChildComponent {
 					router: this.router
 				}),
 				Search,
-				new UserItem({
-					avatarPath:
-						'https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-1024.png',
-					name: 'Artem'
-				})
+				this.userItem
 			],
 			styles
 		)

@@ -71,6 +71,7 @@ export async function redQuery({
 
 		if (errorMessage) {
 			onError(errorMessage)
+			// console.log(errorMessage)
 		}
 	} finally {
 		isLoading = false
