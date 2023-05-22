@@ -50,7 +50,7 @@ class RQuery {
 
 	/**
 	 * Append a new element as a child of the selected element.
-	 * @param {HTMLElement} childElement - The new child element to append.
+	 * @param {SVGSVGElement} childElement - The new child element to append.
 	 * @return {RQuery} The current RQuery instance for chaining.
 	 * */
 	append(childElement) {
