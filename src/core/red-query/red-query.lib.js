@@ -1,3 +1,11 @@
+import { SERVER_URL } from '@/config/url.config'
+
+import { NotificationService } from '../services/notification.service'
+import { StorageService } from '../services/storage.service'
+
+import { extractErrorMessage } from './extract-error-message'
+import { ACCESS_TOKEN_KEY } from '@/constants/auth.constants'
+
 /**
  * RedQuery is a minimalistic library for handling API requests.
  * Fetch data from the API with provided options.
@@ -11,14 +19,6 @@
  * @param {Function} [options.onError=null] - Callback function to be called on error response.
  * @returns {Promise<{isLoading: boolean, error: string|null, data: any|null}>} - An object containing the loading state, error, and data from the response.
  */
-import { extractErrorMessage } from '@/core/red-query/extract-error-message'
-import { NotificationService } from '@/core/services/notification.service'
-import { StorageService } from '@/core/services/storage.service'
-
-import { SERVER_URL } from '@/config/url.config'
-
-import { ACCESS_TOKEN_KEY } from '@/constants/auth.constants'
-
 export async function redQuery({
 	path,
 	body = null,
@@ -27,9 +27,9 @@ export async function redQuery({
 	onError = null,
 	onSuccess = null
 }) {
-	let isLoading = true
-	let error = null
-	let data = null
+	let isLoading = true,
+		error = null,
+		data = null
 	const url = `${SERVER_URL}/api${path}`
 
 	const accessToken = new StorageService().getItem(ACCESS_TOKEN_KEY)
@@ -41,12 +41,15 @@ export async function redQuery({
 			...headers
 		}
 	}
+
 	if (accessToken) {
 		requestOptions.headers.Authorization = `Bearer ${accessToken}`
 	}
+
 	if (body) {
 		requestOptions.body = JSON.stringify(body)
 	}
+
 	try {
 		const response = await fetch(url, requestOptions)
 
@@ -69,12 +72,14 @@ export async function redQuery({
 	} catch (errorData) {
 		const errorMessage = extractErrorMessage(errorData)
 
-		if (errorMessage) {
+		// console.log(errorMessage)
+		if (onError) {
 			onError(errorMessage)
-			// console.log(errorMessage)
 		}
+		new NotificationService().show('error', errorMessage)
 	} finally {
 		isLoading = false
 	}
+
 	return { isLoading, error, data }
 }

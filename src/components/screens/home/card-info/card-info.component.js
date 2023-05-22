@@ -33,6 +33,10 @@ export class CardInfo extends ChildComponent {
 		this.fetchData()
 	}
 
+	destroy() {
+		this.#removeListeners()
+	}
+
 	#copyCardNumber(e) {
 		navigator.clipboard.writeText(e.target.innerText).then(() => {
 			w.target.innerText = 'Card number copied!'

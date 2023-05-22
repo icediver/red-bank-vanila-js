@@ -6,7 +6,7 @@ import { Store } from '@/core/store/store'
 export class CardService {
 	#BASE_URL = '/cards'
 	constructor() {
-		this.store = Store.getInstance()
+		this.store = Store.getInstance().state
 		this.notificationService = new NotificationService()
 	}
 	byUser(onSuccess) {
@@ -60,7 +60,7 @@ export class CardService {
 	 * */
 	transfer({ amount, toCardNumber }, onSuccess) {
 		return redQuery({
-			path: `${this.#BASE_URL}/transfer-money}`,
+			path: `${this.#BASE_URL}/transfer-money`,
 			method: 'PATCH',
 			body: {
 				amount: +amount,
